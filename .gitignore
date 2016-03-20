@@ -1,0 +1,17 @@
+src/Makefile*
+src/.deps/*
+src/dwmbar
+
+config.status
+configure*
+aclocal.m4
+
+temp_dir/*
+Makefile*
+
+autom4te.cache
+
+*.o
+*.sw[op]
+*.log
+
