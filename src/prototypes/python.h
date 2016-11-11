@@ -1,5 +1,5 @@
 /*
-   Copyright 02/22/2015, 07/18/2016
+   10/24/2016
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,32 +17,20 @@
    MA 02110-1301, USA.
 */
 
-#include "config.h" /* Auto-generated */
-#include "include/headers.h"
-#include "prototypes/options.h"
+#ifndef PYTHON_H_
+#define PYTHON_H_
 
-int main(int argc, char *argv[]) {
-  char combined[WHOLE_MAIN_ARR_LEN];
-  char *all = combined;
+#if WITH_PYTHON == 1
 
-  if (-1 == (sysconf(_SC_CLK_TCK))) {
-    FPRINTF("%s\n", "Error: sysconf() failed");
-    return EXIT_FAILURE;
-  }
-
-  if (1 == argc) {
-    parse_konf(all);
-  } else {
-    parse_opts(argc, argv, all);
-  }
-
-  if ('\0' != combined[0]) {
-#if defined (HAVE_X11_XLIB_H)
-    set_status(combined);
+#if WITH_PYTHON2 == 1
+#define PYFON_ZTR PyString_AsString
 #else
-    fprintf(stdout, "%s\n", combined);
-#endif
-  }
+#define PYFON_ZTR PyUnicode_AsUTF8
+#endif /* WITH_PYTHON2 */
 
-  return EXIT_SUCCESS;
-}
+#define RET_PY_STR(x) (NULL != PYFON_ZTR(x) ? PYFON_ZTR(x) : "0")
+
+void get_python(char *, char *);
+#endif /* WITH_PYTHON */
+
+#endif /* PYTHON_H_ */

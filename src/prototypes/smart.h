@@ -1,5 +1,5 @@
 /*
-   Copyright 02/22/2015, 07/18/2016
+   10/23/2016
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,32 +17,9 @@
    MA 02110-1301, USA.
 */
 
-#include "config.h" /* Auto-generated */
-#include "include/headers.h"
-#include "prototypes/options.h"
+#ifndef SMART_H_
+#define SMART_H_
 
-int main(int argc, char *argv[]) {
-  char combined[WHOLE_MAIN_ARR_LEN];
-  char *all = combined;
+void get_drivetemp(char *);
 
-  if (-1 == (sysconf(_SC_CLK_TCK))) {
-    FPRINTF("%s\n", "Error: sysconf() failed");
-    return EXIT_FAILURE;
-  }
-
-  if (1 == argc) {
-    parse_konf(all);
-  } else {
-    parse_opts(argc, argv, all);
-  }
-
-  if ('\0' != combined[0]) {
-#if defined (HAVE_X11_XLIB_H)
-    set_status(combined);
-#else
-    fprintf(stdout, "%s\n", combined);
-#endif
-  }
-
-  return EXIT_SUCCESS;
-}
+#endif /* SMART_H_ */
