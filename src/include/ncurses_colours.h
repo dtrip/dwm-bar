@@ -1,5 +1,5 @@
 /*
-   Copyright 02/22/2015, 07/18/2016
+   09/03/2016
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,32 +17,26 @@
    MA 02110-1301, USA.
 */
 
-#include "config.h" /* Auto-generated */
-#include "include/headers.h"
-#include "prototypes/options.h"
+#ifndef NCURSES_COLOURS_H_
+#define NCURSES_COLOURS_H_
 
-int main(int argc, char *argv[]) {
-  char combined[WHOLE_MAIN_ARR_LEN];
-  char *all = combined;
 
-  if (-1 == (sysconf(_SC_CLK_TCK))) {
-    FPRINTF("%s\n", "Error: sysconf() failed");
-    return EXIT_FAILURE;
-  }
+#if WITH_COLOURS == 1
+#define PINK "^M"
+#define BLUE "^B"
+#define YELLOW "^Y"
 
-  if (1 == argc) {
-    parse_konf(all);
-  } else {
-    parse_opts(argc, argv, all);
-  }
-
-  if ('\0' != combined[0]) {
-#if defined (HAVE_X11_XLIB_H)
-    set_status(combined);
 #else
-    fprintf(stdout, "%s\n", combined);
-#endif
-  }
+#define PINK ""
+#define BLUE ""
+#define YELLOW ""
 
-  return EXIT_SUCCESS;
-}
+#endif /* WITH_COLOURS */
+
+#define NAME_VAL  BLUE STR_SPEC " " PINK STR_SPEC      /* STR1 STR2       */
+#define TEMP      YELLOW STR_SPEC "C "                 /* 32C             */
+#define FMT_KERN  YELLOW KERN_ORIG                     /* Kernel Version  */
+#define FMT_SONG  PINK SONG_ORIG                       /* Song            */
+
+
+#endif /* NCURSES_COLOURS_H_ */

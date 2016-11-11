@@ -1,5 +1,5 @@
 /*
-   Copyright 02/22/2015, 07/18/2016
+   08/06/2016
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,32 +17,27 @@
    MA 02110-1301, USA.
 */
 
-#include "config.h" /* Auto-generated */
-#include "include/headers.h"
-#include "prototypes/options.h"
+#ifndef NET_H_
+#define NET_H_
 
-int main(int argc, char *argv[]) {
-  char combined[WHOLE_MAIN_ARR_LEN];
-  char *all = combined;
-
-  if (-1 == (sysconf(_SC_CLK_TCK))) {
-    FPRINTF("%s\n", "Error: sysconf() failed");
-    return EXIT_FAILURE;
-  }
-
-  if (1 == argc) {
-    parse_konf(all);
-  } else {
-    parse_opts(argc, argv, all);
-  }
-
-  if ('\0' != combined[0]) {
-#if defined (HAVE_X11_XLIB_H)
-    set_status(combined);
+#if defined(__linux__)
+#define NETFAM AF_PACKET
+#define RECVBYTS rx_bytes
+#define SENTBYTS tx_bytes
 #else
-    fprintf(stdout, "%s\n", combined);
-#endif
-  }
 
-  return EXIT_SUCCESS;
-}
+#define NETFAM AF_LINK
+#define RECVBYTS ifi_ibytes
+#define SENTBYTS ifi_obytes
+#endif /* __linux__ */
+
+void get_net(char *, char *, uint8_t num);
+void get_nic_info2(char *, char *, uint8_t num);
+void get_ip_lookup(char *, char *);
+void get_nic_info(char *, char *);
+
+#if defined(__linux__)
+void get_wifi(char *, char *, uint8_t num);
+#endif /* __linux__ */
+
+#endif /* NET_H_ */

@@ -1,5 +1,5 @@
 /*
-   Copyright 07/06/2015 Aaron Caffrey https://github.com/wifiextender
+   07/24/2016
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,19 +17,29 @@
    MA 02110-1301, USA.
 */
 
-#ifndef FUNCTIONS_H_
-#define FUNCTIONS_H_
+#ifndef X_COLOURS_H_
+#define X_COLOURS_H_
 
-void get_cpu(char *, char *);
-void get_ram(char *);
-void get_ssd(char *);
-void get_packs(char *);
-void get_kernel(char *);
-void get_voltage(char *);
-void get_fans(char *);
-void get_mobo(char *, char *);
-void get_time(char *);
-void get_volume(char *);
-void set_status(const char *);
 
-#endif /* FUNCTIONS_H_ */
+/* The dwm colours are specified
+ * in your dwm config.h
+*/
+#if WITH_COLOURS == 1
+#define PINK "\x0b"
+#define BLUE "\x0a"
+#define YELLOW "\x09"
+
+#else
+#define PINK ""
+#define BLUE ""
+#define YELLOW ""
+
+#endif /* WITH_COLOURS */
+
+#define NAME_VAL  BLUE STR_SPEC " " PINK STR_SPEC      /* STR1 STR2       */
+#define TEMP      YELLOW STR_SPEC "C "                 /* 32C             */
+#define FMT_KERN  YELLOW KERN_ORIG                     /* Kernel Version  */
+#define FMT_SONG  PINK SONG_ORIG                       /* Song            */
+
+
+#endif /* X_COLOURS_H_ */

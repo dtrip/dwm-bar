@@ -1,5 +1,5 @@
 /*
-   Copyright 02/22/2015, 07/18/2016
+   09/08/2016
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,32 +17,15 @@
    MA 02110-1301, USA.
 */
 
-#include "config.h" /* Auto-generated */
-#include "include/headers.h"
-#include "prototypes/options.h"
+#ifndef INCLUDE_OPENBZD_HEADERZ_H_
+#define INCLUDE_OPENBZD_HEADERZ_H_
 
-int main(int argc, char *argv[]) {
-  char combined[WHOLE_MAIN_ARR_LEN];
-  char *all = combined;
+#include <sys/types.h>
+#include <sys/sysctl.h>
 
-  if (-1 == (sysconf(_SC_CLK_TCK))) {
-    FPRINTF("%s\n", "Error: sysconf() failed");
-    return EXIT_FAILURE;
+#define SYSCTLVAL(w, x, y, z) \
+  if (0 != (sysctl(w, x, y, z, NULL, 0))) { \
+    FUNC_FAILED("sysctl()"); \
   }
 
-  if (1 == argc) {
-    parse_konf(all);
-  } else {
-    parse_opts(argc, argv, all);
-  }
-
-  if ('\0' != combined[0]) {
-#if defined (HAVE_X11_XLIB_H)
-    set_status(combined);
-#else
-    fprintf(stdout, "%s\n", combined);
-#endif
-  }
-
-  return EXIT_SUCCESS;
-}
+#endif /* INCLUDE_OPENBZD_HEADERZ_H_ */
